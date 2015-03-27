@@ -84,64 +84,68 @@
             
 
             
-	<!-- 标题栏 -->
-	<div class="main-title">
-		<h2>用户列表</h2>
-	</div>
-	<div class="cf">
-		<div class="fl">
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>用户管理</h2>
+    </div>
+    <div class="cf">
+        <div class="fl">
             <a class="btn" href="<?php echo U('add');?>">新 增</a>
-            <button class="btn ajax-post" url="<?php echo U('changeStatus?method=resumeUser');?>" target-form="ids">启 用</button>
-            <button class="btn ajax-post" url="<?php echo U('changeStatus?method=forbidUser');?>" target-form="ids">禁 用</button>
-            <button class="btn ajax-post confirm" url="<?php echo U('changeStatus?method=deleteUser');?>" target-form="ids">删 除</button>
+            <button class="btn ajax-post" url="<?php echo U('changeStatus?method=resume');?>" target-form="ids">启 用</button>
+            <button class="btn ajax-post" url="<?php echo U('changeStatus?method=forbid');?>" target-form="ids">禁 用</button>
+            <button class="btn ajax-post confirm" url="<?php echo U('changeStatus?method=delete');?>" target-form="ids">删 除</button>
         </div>
 
         <!-- 高级搜索 -->
-		<div class="search-form fr cf">
-			<div class="sleft">
-				<input type="text" name="nickname" class="search-input" value="<?php echo I('nickname');?>" placeholder="请输入用户昵称或者ID">
-				<a class="sch-btn" href="javascript:;" id="search" url="<?php echo U('index');?>"><i class="btn-search"></i></a>
-			</div>
-		</div>
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="username" class="search-input" value="<?php echo I('username');?>" placeholder="请输入用户名">
+                <a class="sch-btn" href="javascript:;" id="search" url="<?php echo U('index');?>"><i class="btn-search"></i></a>
+            </div>
+        </div>
     </div>
     <!-- 数据列表 -->
     <div class="data-table table-striped">
-	<table class="">
+    <table class="">
     <thead>
         <tr>
-    		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-    		<th class="">ID</th>
-    		<th class="">昵称</th>
-    		<th class="">积分</th>
-    		<th class="">登录次数</th>
-    		<th class="">最后登录时间</th>
-    		<th class="">最后登录IP</th>
-    		<th class="">状态</th>
-    		<th class="">操作</th>
-		</tr>
+            <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+            <th class="">ID</th>
+            <th class="">用户名</th>
+            <th class="">邮箱</th>
+            <th class="">手机号</th>
+            <th class="">注册时间</th>
+            <th class="">注册IP</th>
+            <th class="">最后登录时间</th>
+            <th class="">最后登录IP</th>
+            <th class="">状态</th>
+            <th class="">操作</th>
+        </tr>
     </thead>
     <tbody>
-		<?php if(!empty($_list)): if(is_array($_list)): $i = 0; $__LIST__ = $_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo ($vo["uid"]); ?>" /></td>
-			<td><?php echo ($vo["uid"]); ?> </td>
-			<td><?php echo ($vo["nickname"]); ?></td>
-			<td><?php echo ($vo["score"]); ?></td>
-			<td><?php echo ($vo["login"]); ?></td>
-			<td><span><?php echo (time_format($vo["last_login_time"])); ?></span></td>
-			<td><span><?php echo long2ip($vo['last_login_ip']);?></span></td>
-			<td><?php echo ($vo["status_text"]); ?></td>
-			<td><?php if(($vo["status"]) == "1"): ?><a href="<?php echo U('User/changeStatus?method=forbidUser&id='.$vo['uid']);?>" class="ajax-get">禁用</a>
-				<?php else: ?>
-				<a href="<?php echo U('User/changeStatus?method=resumeUser&id='.$vo['uid']);?>" class="ajax-get">启用</a><?php endif; ?>
-				<a href="<?php echo U('AuthManager/group?uid='.$vo['uid']);?>" class="authorize">授权</a>
-                <a href="<?php echo U('User/changeStatus?method=deleteUser&id='.$vo['uid']);?>" class="confirm ajax-get">删除</a>
-                </td>
-		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
-		<?php else: ?>
-		<td colspan="9" class="text-center"> aOh! 暂时还没有内容! </td><?php endif; ?>
-	</tbody>
+        <?php if(!empty($_list)): if(is_array($_list)): $i = 0; $__LIST__ = $_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
+            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo ($vo["id"]); ?>" /></td>
+            <td><?php echo ($vo["id"]); ?> </td>
+            <td><a href="<?php echo U('edit?id='.$vo['id']);?>"><?php echo ($vo["username"]); ?></a></td>
+            <td><?php echo ($vo["email"]); ?></td>
+            <td><?php echo ($vo["mobile"]); ?></td>
+            <td><span><?php echo (time_format($vo["created_at"])); ?></span></td>
+            <td><span><?php echo (long2ip($vo["reg _ip"])); ?></span></td>
+            <td><span><?php echo (time_format($vo["last_login_time"])); ?></span></td>
+            <td><span><?php echo (long2ip($vo["last_login_ip"])); ?></span></td>
+            <td><?php echo (status_text($vo["status"])); ?></td>
+            <td>
+                <?php if(($vo["status"]) == "1"): ?><a href="<?php echo U('changeStatus?method=forbid&id='.$vo['id']);?>" class="ajax-get">禁用</a>
+                <?php else: ?>
+                    <a href="<?php echo U('changeStatus?method=resume&id='.$vo['id']);?>" class="ajax-get">启用</a><?php endif; ?>
+                <a href="<?php echo U('changeStatus?method=delete&id='.$vo['id']);?>" class="confirm ajax-get">删除</a>
+            </td>
+        </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+        <?php else: ?>
+            <td colspan="9" class="text-center"> aOh! 暂时还没有内容! </td><?php endif; ?>
+    </tbody>
     </table>
-	</div>
+    </div>
     <div class="page">
         <?php echo ($_page); ?>
     </div>
@@ -239,12 +243,12 @@
         }();
     </script>
     
-	<script src="/Public/static/thinkbox/jquery.thinkbox.js"></script>
+    <script src="/Public/static/thinkbox/jquery.thinkbox.js"></script>
 
-	<script type="text/javascript">
-	//搜索功能
-	$("#search").click(function(){
-		var url = $(this).attr('url');
+    <script type="text/javascript">
+    //搜索功能
+    $("#search").click(function(){
+        var url = $(this).attr('url');
         var query  = $('.search-form').find('input').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
@@ -253,18 +257,18 @@
         }else{
             url += '?' + query;
         }
-		window.location.href = url;
-	});
-	//回车搜索
-	$(".search-input").keyup(function(e){
-		if(e.keyCode === 13){
-			$("#search").click();
-			return false;
-		}
-	});
+        window.location.href = url;
+    });
+    //回车搜索
+    $(".search-input").keyup(function(e){
+        if(e.keyCode === 13){
+            $("#search").click();
+            return false;
+        }
+    });
     //导航高亮
     highlight_subnav('<?php echo U('Member/index');?>');
-	</script>
+    </script>
 
 </body>
 </html>

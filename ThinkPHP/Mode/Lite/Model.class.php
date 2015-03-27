@@ -901,7 +901,6 @@ class Model {
 
         // 赋值当前数据对象
         $this->data =   $data;
-dump($data);die;
         // 返回创建的数据以供其他调用
         return $data;
      }

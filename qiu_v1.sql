@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015-03-26 17:42:36
+-- Generation Time: 2015-03-27 17:31:52
 -- 服务器版本： 5.5.36
 -- PHP Version: 5.4.25
 
@@ -34,13 +34,14 @@ CREATE TABLE IF NOT EXISTS `qiu_member` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mobile` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
+  `login` int(11) NOT NULL DEFAULT '0',
   `reg_ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `last_login_ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `last_login_time` int(10) unsigned NOT NULL DEFAULT '0',
   `created_at` int(10) unsigned NOT NULL DEFAULT '0',
   `updated_at` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

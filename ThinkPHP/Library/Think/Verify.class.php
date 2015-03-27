@@ -127,7 +127,7 @@ class Verify {
 
         if(empty($this->fontttf)){
             $dir = dir($ttfPath);
-            $ttfs = array();		
+            $ttfs = array();
             while (false !== ($file = $dir->read())) {
                 if($file[0] != '.' && substr($file, -4) == '.ttf') {
                     $ttfs[] = $file;
